@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PreguntasDAW</title>
+  <title>Quiz desde Google Sheets</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Preguntas DAW</h1>
+  <div class="quiz-container">
+    <h1>Quiz de Preguntas</h1>
+    <div id="quiz">
+      <h2 id="question">Cargando pregunta...</h2>
+      <div id="answers">
+        <button class="answer-btn" id="answer1" onclick="seleccionarRespuesta(0)">Respuesta 1</button>
+        <button class="answer-btn" id="answer2" onclick="seleccionarRespuesta(1)">Respuesta 2</button>
+        <button class="answer-btn" id="answer3" onclick="seleccionarRespuesta(2)">Respuesta 3</button>
+        <button class="answer-btn" id="answer4" onclick="seleccionarRespuesta(3)">Respuesta 4</button>
+      </div>
+      <div id="result"></div>
+      <button id="next-question" onclick="cargaPreguntaAleatoria()">Siguiente Pregunta</button>
+    </div>
+  </div>
 
   <script src="index.js"></script>
 </body>
