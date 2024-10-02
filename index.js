@@ -12,7 +12,7 @@ let preguntaActual = []; // Objeto con la pregunta actual
 let indexRespuestaCorrecta = -1; // index de la respuesta correcta de la pregunta seleccionada
 let preguntasCorrectas = 0
 let errores = 0
-let tiempo = 60
+let tiempo = 120
 let posicionActual = 0
 
 
@@ -23,7 +23,7 @@ async function leerPreguntas() {
     const response = await fetch(sheetURL);
     const data = await response.json();
     preguntas = data.values.slice(1); // Omitir la fila de encabezado
-    cargaPreguntaAleatoria()
+    // cargaPreguntaAleatoria()
   } catch (error) {
     console.error('Error al obtener preguntas:', error);
   }
@@ -95,12 +95,14 @@ function finPartida() {
 
 
 
-document.querySelector('#question').innerHTML = 'Tienes 60 segundos para alcanzar la casilla final. Cada acierto avanzas una casilla, pero cada error retrocedes 3. ¡Suerte!';
+document.querySelector('#question').innerHTML = 'Tienes dos minutos para alcanzar la casilla final. Cada acierto avanzas una casilla, pero cada error retrocedes 3. ¡Suerte!';
 
 document.querySelector('#btnComenzar').addEventListener('click', ()=>{
   
   document.querySelector('#btnComenzar').classList.add('d-none');
   document.querySelector('#answers').classList.remove('d-none');
+  document.querySelector('#next-question').classList.remove('d-none');;
+  cargaPreguntaAleatoria();
   const temporizador = setInterval(() => {
     tiempo--
     document.querySelector('#tiempo').innerHTML = tiempo;
@@ -110,4 +112,3 @@ document.querySelector('#btnComenzar').addEventListener('click', ()=>{
     }
   }, 1000)
 });
-// cargaPreguntaAleatoria();

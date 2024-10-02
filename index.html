@@ -128,7 +128,7 @@
         </div>
       </div>
       <div class="col-md-3 col-12 mt-5">
-        <p class="btn bg-secondary d-block w-100 text-white fs-5"><span id="tiempo">30</span> seg</p>
+        <p class="btn bg-secondary d-block w-100 text-white fs-5"><span id="tiempo">?</span> seg</p>
         <p class="btn btn-success d-block w-100 fs-5">Aciertos: <span id="aciertos">0</span></p>
         <p class="btn btn-danger d-block w-100 fs-5">Errores: <span id="errores">0</span></p>
 
@@ -149,7 +149,7 @@
             <button class="btn btn-primary" id="answer4" onclick="seleccionarRespuesta(3)">Respuesta 4</button>
           </div>
           <div id="result" class="alert mt-3" style="display: none;"></div>
-          <button id="next-question" class="btn btn-success mt-3" onclick="cargaPreguntaAleatoria()">Siguiente
+          <button id="next-question" class="btn btn-success mt-3 d-none" onclick="cargaPreguntaAleatoria()">Siguiente
             Pregunta</button>
           <div id="btnComenzar" class="text-center">
             <button class="btn btn-warning fs-1 p-5 text-white>">¡Comenzar el Quiz!</button>
