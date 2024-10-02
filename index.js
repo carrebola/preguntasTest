@@ -1,3 +1,4 @@
+
 // link publico de la hoja de cálculo: https://docs.google.com/spreadsheets/d/1_FSWhj1fbH36mCYRGqkABrZkVVOqiK52WphaBn7e730/edit?usp=sharing
 
 const apiKey = 'AIzaSyCxIikMRbAWPGYGHQiI2VeCC7Ql3kTnNTc';
@@ -9,6 +10,10 @@ const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/value
 let preguntas = []; // array con todas las preguntas y sus respuestas
 let preguntaActual = []; // Objeto con la pregunta actual
 let indexRespuestaCorrecta = -1; // index de la respuesta correcta de la pregunta seleccionada
+let preguntasCorrectas = 0
+let errores = 0
+let tiempo = 60
+let posicionActual = 0
 
 
 // Función para leer preguntas
@@ -18,49 +23,91 @@ async function leerPreguntas() {
     const response = await fetch(sheetURL);
     const data = await response.json();
     preguntas = data.values.slice(1); // Omitir la fila de encabezado
-    console.log('preguntas', preguntas); // mostramos por consola
     cargaPreguntaAleatoria()
   } catch (error) {
     console.error('Error al obtener preguntas:', error);
   }
 }
+leerPreguntas()
 
-// Función para cargar una de las preguntas de forma aleatoria
+
+
 function cargaPreguntaAleatoria() {
+  const randomIndex = Math.floor(Math.random() * preguntas.length);
+  preguntaActual = preguntas[randomIndex];
+  indexRespuestaCorrecta = parseInt(preguntaActual[6]) - 1;
 
-  const randomIndex = Math.floor(Math.random() * preguntas.length); // Devuelve numero aleatorio entre 0 y la longitud máxima del array de preguntas
-  
-  preguntaActual = preguntas[randomIndex]; // Objeto que contiene la pregunta seleccionada aleatoriamente
-
-  console.log('numero aleatorio', randomIndex); 
-  console.log('preguntaActual', preguntaActual);
-
-  indexRespuestaCorrecta = parseInt(preguntaActual[6]) - 1; // Obtenemos la posición del array de la respuesta correcta a la pregunta seleccionada
-
-  console.log('respuesta correcta', indexRespuestaCorrecta );
-
-  // Inyectamos la pregunta y las respuestas en el html
   document.querySelector('#question').innerHTML = preguntaActual[0] + ' ' + preguntaActual[1];
+  document.querySelector('#answer1').disabled = false
+  document.querySelector('#answer2').disabled = false
+  document.querySelector('#answer3').disabled = false
+  document.querySelector('#answer4').disabled = false
   document.querySelector('#answer1').innerHTML = preguntaActual[2];
   document.querySelector('#answer2').innerHTML = preguntaActual[3];
   document.querySelector('#answer3').innerHTML = preguntaActual[4];
   document.querySelector('#answer4').innerHTML = preguntaActual[5];
-  document.querySelector('#result').innerHTML = '';
- 
+  document.getElementById('result').style.display = 'none';
+  document.querySelector('#next-question').disabled = true
 }
 
-// Función para verificar si la respuesta es correcta
 function seleccionarRespuesta(indexRespuestaSeleccionada) {
-  // mostramos el index del boton donde hemos hecho click
-  console.log('indexRespuestaSeleccionada y correcta', indexRespuestaSeleccionada, indexRespuestaCorrecta);
-  if(indexRespuestaSeleccionada === indexRespuestaCorrecta){
-    textoResultado = '¡Correcto!' 
-  }else{
-    const respuestaCorrecta = preguntaActual[parseInt(indexRespuestaCorrecta)+1]
-    textoResultado = 'Incorrecto, la respuesta correcta es: <br>' +  parseInt(indexRespuestaCorrecta + 1) + ' - ' +respuestaCorrecta
+
+  document.querySelector('#answer1').disabled = true
+  document.querySelector('#answer2').disabled = true
+  document.querySelector('#answer3').disabled = true
+  document.querySelector('#answer4').disabled = true
+  document.querySelector('#next-question').disabled = false
+  let textoResultado;
+  if (indexRespuestaSeleccionada === indexRespuestaCorrecta) {
+    textoResultado = '¡Correcto!';
+    preguntasCorrectas++
+    document.querySelector('#aciertos').innerHTML = preguntasCorrectas;
+    moverFicha(1)
+  } else {
+    const respuestaCorrecta = preguntaActual[parseInt(indexRespuestaCorrecta) + 2];
+    textoResultado = 'Incorrecto, la respuesta correcta es: ' + respuestaCorrecta;
+    errores++
+    document.querySelector('#errores').innerHTML = errores;
+    moverFicha(-3)
   }
-  document.getElementById('result').innerHTML = textoResultado;
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = textoResultado;
+  resultDiv.className = indexRespuestaSeleccionada === indexRespuestaCorrecta ? 'alert alert-success' : 'alert alert-danger';
+  resultDiv.style.display = 'block';
 }
 
-// llamamos a la función leer preguntas para empezar el juego
-leerPreguntas()
+function moverFicha(posiciones) {
+  const fichas = document.querySelectorAll('.div');
+  fichas[posicionActual].classList.remove('div-point')
+  posicionActual += posiciones
+  if (posicionActual < 0) posicionActual = 0
+  if (posicionActual >= 20) {
+    finPartida()
+  }
+  console.log('posicionActual', posicionActual);
+  fichas[posicionActual].classList.add('div-point')
+}
+
+
+function finPartida() {
+  alert('fin partida')
+}
+
+
+
+document.querySelector('#question').innerHTML = 'Tienes 60 segundos para alcanzar la casilla final. Cada acierto avanzas una casilla, pero cada error retrocedes 3. ¡Suerte!';
+
+document.querySelector('#btnComenzar').addEventListener('click', ()=>{
+  
+  document.querySelector('#btnComenzar').classList.add('d-none');
+  document.querySelector('#answers').classList.remove('d-none');
+  const temporizador = setInterval(() => {
+    tiempo--
+    document.querySelector('#tiempo').innerHTML = tiempo;
+    if(tiempo == 0){
+      clearInterval(temporizador)
+      finPartida()
+    }
+  }, 1000)
+});
+// cargaPreguntaAleatoria();
