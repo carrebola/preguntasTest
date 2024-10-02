@@ -6,6 +6,11 @@ const sheetID = '1_FSWhj1fbH36mCYRGqkABrZkVVOqiK52WphaBn7e730';
 
 const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/preguntas?key=${apiKey}`;
 
+const idCliente = 1011906717113-o66j9b11b3nc5i7foqi87aeschb07rff.apps.googleusercontent.com
+const secretoCliente = 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
+
+
+
 
 let preguntas = []; // array con todas las preguntas y sus respuestas
 let preguntaActual = []; // Objeto con la pregunta actual
