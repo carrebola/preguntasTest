@@ -5,6 +5,8 @@ function handleCredentialResponse(response) {
   
   // Mostrar la foto de perfil en tu aplicación
   document.querySelector('#foto-perfil').src = userInfo.picture;
+  document.querySelector('#userName').innerHTML = userInfo.name;
+
 }
 
 // Función para decodificar el token JWT y obtener información del usuario
