@@ -134,3 +134,38 @@ document.querySelector('#btnSinTiempo').addEventListener('click', ()=>{
    
   }, 1000)
 });
+
+
+// Función para guardar los datos del usuario en Google Sheets
+async function guardarDatosUsuario(nombre, email, fechaRegistro) {
+  // Datos que se enviarán a Google Sheets
+  const data = {
+    range: "partidas!A1", // Cambia el rango según tu hoja de cálculo
+    majorDimension: "ROWS",
+    values: [
+      [nombre, email, fechaRegistro]
+    ]
+  };
+
+  try {
+    const response = await fetch(sheetURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      console.log("Datos guardados correctamente:", result);
+    } else {
+      console.error("Error al guardar los datos:", result);
+    }
+  } catch (error) {
+    console.error("Error al conectar con la API de Google Sheets:", error);
+  }
+}
+
+// Ejemplo de uso
+guardarDatosUsuario("Juan Pérez", "juan@example.com", new Date().toISOString());
