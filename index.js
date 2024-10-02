@@ -3,8 +3,8 @@
 
 const apiKey = 'AIzaSyCxIikMRbAWPGYGHQiI2VeCC7Ql3kTnNTc';
 const sheetID = '1_FSWhj1fbH36mCYRGqkABrZkVVOqiK52WphaBn7e730';
-
-const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/preguntas?key=${apiKey}`;
+let hoja = 'preguntas'
+let sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${hoja}?key=${apiKey}`;
 
 const idCliente = '1011906717113-ni524ihb5rfd7tt24am8iufa1ncnnqaa.apps.googleusercontent.com'
 const secretoCliente = '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'
@@ -135,37 +135,74 @@ document.querySelector('#btnSinTiempo').addEventListener('click', ()=>{
   }, 1000)
 });
 
+// Configuración de OAuth 2.0
+const CLIENT_ID = 'TU_CLIENT_ID.apps.googleusercontent.com'; // Reemplaza con tu client ID
+const API_KEY = 'TU_API_KEY';  // No es necesario, pero es opcional en algunas configuraciones
+const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';  // Acceso para editar Google Sheets
+
+// ID de la hoja de cálculo de Google Sheets (reemplázalo por el ID de tu hoja)
+const SPREADSHEET_ID = 'TU_SHEET_ID';
+
+// Inicializar la API de Google y autenticar al usuario
+function iniciarOAuth() {
+  gapi.load('client:auth2', initClient);
+}
+
+function initClient() {
+  gapi.client.init({
+    apiKey: API_KEY,
+    clientId: CLIENT_ID,
+    scope: SCOPES,
+    discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"]
+  }).then(() => {
+    const authInstance = gapi.auth2.getAuthInstance();
+    if (authInstance.isSignedIn.get()) {
+      console.log("Usuario ya autenticado");
+    } else {
+      // Si no está autenticado, pedimos iniciar sesión
+      authInstance.signIn();
+    }
+  }).catch(error => {
+    console.error("Error al inicializar el cliente de Google:", error);
+  });
+}
 
 // Función para guardar los datos del usuario en Google Sheets
 async function guardarDatosUsuario(nombre, email, fechaRegistro) {
-  // Datos que se enviarán a Google Sheets
-  const data = {
-    range: "partidas!A1", // Cambia el rango según tu hoja de cálculo
+  const datos = {
+    range: "Sheet1!A1", // El rango de celdas que queremos modificar
     majorDimension: "ROWS",
     values: [
-      [nombre, email, fechaRegistro]
+      [nombre, email, fechaRegistro]  // Los datos que queremos guardar
     ]
   };
 
   try {
-    const response = await fetch(sheetURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+    // Realizamos la solicitud para añadir datos a la hoja de cálculo
+    const request = gapi.client.sheets.spreadsheets.values.append({
+      spreadsheetId: SPREADSHEET_ID,
+      range: 'Sheet1!A1',
+      valueInputOption: 'RAW',
+      resource: datos
     });
 
-    const result = await response.json();
-    if (response.ok) {
-      console.log("Datos guardados correctamente:", result);
-    } else {
-      console.error("Error al guardar los datos:", result);
-    }
+    const response = await request;
+    console.log("Datos guardados correctamente:", response.result);
   } catch (error) {
-    console.error("Error al conectar con la API de Google Sheets:", error);
+    console.error("Error al guardar los datos en Google Sheets:", error);
   }
 }
 
-// Ejemplo de uso
-guardarDatosUsuario("Juan Pérez", "juan@example.com", new Date().toISOString());
+// Evento para iniciar la autenticación
+document.querySelector("#btnLogin").addEventListener('click', iniciarOAuth);
+
+// Evento para guardar datos
+document.querySelector("#btnGuardarDatos").addEventListener('click', () => {
+  console.log('guardar');
+  if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+    // Solo guardar los datos si el usuario está autenticado
+    guardarDatosUsuario("Juan Pérez", "juan@example.com", new Date().toISOString());
+  } else {
+    console.log("El usuario no está autenticado.");
+  }
+});
