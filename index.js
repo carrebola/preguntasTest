@@ -168,7 +168,7 @@ function updateSigninStatus(isSignedIn) {
     document.getElementById('writeToSheetBtn').style.display = 'block';
     document.getElementById('loginBtn').style.display = 'none';
   } else {
-    document.getElementById('writeToSheetBtn').style.display = 'none';
+    document.getElementById('writeToSheetBtn').style.display = 'block';
     document.getElementById('loginBtn').style.display = 'block';
   }
 }
