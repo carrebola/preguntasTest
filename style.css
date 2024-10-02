@@ -1,53 +1,47 @@
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-}
-
 .quiz-container {
-  text-align: center;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgb(0,0,0,0.1);
-}
 
-#answers {
-  margin: 20px 0;
-}
+  margin: 50px auto;
 
-.answer-btn {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.answer-btn:hover {
-  background-color: #0056b3;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #result {
   margin-top: 20px;
-  font-weight: bold;
 }
 
-#next-question {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #28a745;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: aliceblue;
+}
+
+.con {
+  position: relative;
+  width: 1000px;
+
+}
+
+.div {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-color: cadetblue;
+  border: 3px solid white;
+  border-radius: 0 50% 50% 50%;
   color: white;
-  border: none;
-  cursor: pointer;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 }
 
-#next-question:hover {
-  background-color: #218838;
+/* El punto del interrogante */
+.div-point {
+  background-color: #e74c3c;
+  color: white;
+  border: 3px solid white;
 }

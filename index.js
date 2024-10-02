@@ -14,6 +14,7 @@ let preguntasCorrectas = 0
 let errores = 0
 let tiempo = 120
 let posicionActual = 0
+let temporizador
 
 
 // Función para leer preguntas
@@ -62,7 +63,7 @@ function seleccionarRespuesta(indexRespuestaSeleccionada) {
     textoResultado = '¡Correcto!';
     preguntasCorrectas++
     document.querySelector('#aciertos').innerHTML = preguntasCorrectas;
-    moverFicha(1)
+    moverFicha(10)
   } else {
     const respuestaCorrecta = preguntaActual[parseInt(indexRespuestaCorrecta) + 2];
     textoResultado = 'Incorrecto, la respuesta correcta es: ' + respuestaCorrecta;
@@ -81,7 +82,9 @@ function moverFicha(posiciones) {
   fichas[posicionActual].classList.remove('div-point')
   posicionActual += posiciones
   if (posicionActual < 0) posicionActual = 0
-  if (posicionActual >= 20) {
+  if (posicionActual >= 19) {
+    posicionActual = 19 //
+    clearInterval(temporizador)
     finPartida()
   }
   console.log('posicionActual', posicionActual);
@@ -95,20 +98,34 @@ function finPartida() {
 
 
 
-document.querySelector('#question').innerHTML = 'Tienes dos minutos para alcanzar la casilla final. Cada acierto avanzas una casilla, pero cada error retrocedes 3. ¡Suerte!';
+document.querySelector('#question').innerHTML = 'Cada acierto avanzas una casilla, pero cada error retrocedes 3. ¡Suerte!';
 
-document.querySelector('#btnComenzar').addEventListener('click', ()=>{
+document.querySelector('#btnTiempo').addEventListener('click', ()=>{
   
   document.querySelector('#btnComenzar').classList.add('d-none');
   document.querySelector('#answers').classList.remove('d-none');
   document.querySelector('#next-question').classList.remove('d-none');;
   cargaPreguntaAleatoria();
-  const temporizador = setInterval(() => {
+  temporizador = setInterval(() => {
     tiempo--
     document.querySelector('#tiempo').innerHTML = tiempo;
     if(tiempo == 0){
       clearInterval(temporizador)
       finPartida()
     }
+  }, 1000)
+});
+
+document.querySelector('#btnSinTiempo').addEventListener('click', ()=>{
+  
+  document.querySelector('#btnComenzar').classList.add('d-none');
+  document.querySelector('#answers').classList.remove('d-none');
+  document.querySelector('#next-question').classList.remove('d-none');;
+  cargaPreguntaAleatoria();
+  tiempo = 0
+  temporizador = setInterval(() => {
+    tiempo++
+    document.querySelector('#tiempo').innerHTML = tiempo;
+   
   }, 1000)
 });

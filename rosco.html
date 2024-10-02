@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Rosco</title>
+    <style>
+      body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.rosco-container {
+    position: relative;
+    width: 80vw; /* El cercle ocuparà el 80% de l'ample de la pantalla */
+    height: 80vw; /* El cercle tindrà la mateixa altura que l'ample */
+    max-height: 80vh; /* Limitem l'altura al 80% de la pantalla per mantenir la proporció */
+    max-width: 80vh; /* El cercle no pot ser més ample que l'altura disponible */
+    border: 2px solid #333;
+    border-radius: 50%;
+    margin: 10px; /* Petit marge */
+}
+
+.letter {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* Distribució de lletres en cercle */
+.letter:nth-child(1)  { transform: translate(-50%, -50%) rotate(0deg)   translate(38vw) rotate(0deg); }
+.letter:nth-child(2)  { transform: translate(-50%, -50%) rotate(15deg)  translate(38vw) rotate(-15deg); }
+.letter:nth-child(3)  { transform: translate(-50%, -50%) rotate(30deg)  translate(38vw) rotate(-30deg); }
+.letter:nth-child(4)  { transform: translate(-50%, -50%) rotate(45deg)  translate(38vw) rotate(-45deg); }
+.letter:nth-child(5)  { transform: translate(-50%, -50%) rotate(60deg)  translate(38vw) rotate(-60deg); }
+.letter:nth-child(6)  { transform: translate(-50%, -50%) rotate(75deg)  translate(38vw) rotate(-75deg); }
+.letter:nth-child(7)  { transform: translate(-50%, -50%) rotate(90deg)  translate(38vw) rotate(-90deg); }
+.letter:nth-child(8)  { transform: translate(-50%, -50%) rotate(105deg) translate(38vw) rotate(-105deg); }
+.letter:nth-child(9)  { transform: translate(-50%, -50%) rotate(120deg) translate(38vw) rotate(-120deg); }
+.letter:nth-child(10) { transform: translate(-50%, -50%) rotate(135deg) translate(38vw) rotate(-135deg); }
+.letter:nth-child(11) { transform: translate(-50%, -50%) rotate(150deg) translate(38vw) rotate(-150deg); }
+.letter:nth-child(12) { transform: translate(-50%, -50%) rotate(165deg) translate(38vw) rotate(-165deg); }
+.letter:nth-child(13) { transform: translate(-50%, -50%) rotate(180deg) translate(38vw) rotate(-180deg); }
+.letter:nth-child(14) { transform: translate(-50%, -50%) rotate(195deg) translate(38vw) rotate(-195deg); }
+.letter:nth-child(15) { transform: translate(-50%, -50%) rotate(210deg) translate(38vw) rotate(-210deg); }
+.letter:nth-child(16) { transform: translate(-50%, -50%) rotate(225deg) translate(38vw) rotate(-225deg); }
+.letter:nth-child(17) { transform: translate(-50%, -50%) rotate(240deg) translate(38vw) rotate(-240deg); }
+.letter:nth-child(18) { transform: translate(-50%, -50%) rotate(255deg) translate(38vw) rotate(-255deg); }
+.letter:nth-child(19) { transform: translate(-50%, -50%) rotate(270deg) translate(38vw) rotate(-270deg); }
+.letter:nth-child(20) { transform: translate(-50%, -50%) rotate(285deg) translate(38vw) rotate(-285deg); }
+.letter:nth-child(21) { transform: translate(-50%, -50%) rotate(300deg) translate(38vw) rotate(-300deg); }
+.letter:nth-child(22) { transform: translate(-50%, -50%) rotate(315deg) translate(38vw) rotate(-315deg); }
+.letter:nth-child(23) { transform: translate(-50%, -50%) rotate(330deg) translate(38vw) rotate(-330deg); }
+.letter:nth-child(24) { transform: translate(-50%, -50%) rotate(345deg) translate(38vw) rotate(-345deg); }
+.letter:nth-child(25) { transform: translate(-50%, -50%) rotate(360deg) translate(38vw) rotate(-360deg); }
+
+    </style>
+</head>
+<body>
+    <div class="rosco-container">
+        <div class="letter">A</div>
+        <div class="letter">B</div>
+        <div class="letter">C</div>
+        <div class="letter">D</div>
+        <div class="letter">E</div>
+        <div class="letter">F</div>
+        <div class="letter">G</div>
+        <div class="letter">H</div>
+        <div class="letter">I</div>
+        <div class="letter">J</div>
+        <div class="letter">K</div>
+        <div class="letter">L</div>
+        <div class="letter">M</div>
+        <div class="letter">N</div>
+        <div class="letter">O</div>
+        <div class="letter">P</div>
+        <div class="letter">Q</div>
+        <div class="letter">R</div>
+        <div class="letter">S</div>
+        <div class="letter">T</div>
+        <div class="letter">U</div>
+        <div class="letter">V</div>
+        <div class="letter">W</div>
+        <div class="letter">X</div>
+        <div class="letter">Y</div>
+        <div class="letter">Z</div>
+    </div>
+</body>
+</html>
